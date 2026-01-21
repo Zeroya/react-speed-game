@@ -1,0 +1,18 @@
+.app {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+
+  &--playing {
+    .left-panel {
+      width: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    .right-panel {
+      width: 100%;
+    }
+  }
+}

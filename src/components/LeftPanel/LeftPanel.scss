@@ -1,0 +1,85 @@
+@use '../../styles/colors' as *;
+
+.left-panel {
+  width: 25%;
+  height: 100vh;
+  background: linear-gradient(180deg, $color-bg-left-panel 0%, $color-bg-left-panel-secondary 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
+  transition: width 0.4s ease-out, padding 0.4s ease-out;
+
+  // Бордер справа на всю высоту
+  &::before {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 7px;
+    height: 100%;
+    background-color: $color-border-light;
+    z-index: 1;
+  }
+
+  &__title {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    font-size: 14px;
+    font-weight: 500;
+    color: $color-text-muted;
+    letter-spacing: 1px;
+  }
+
+  &__content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding-bottom: 20%;
+  }
+
+  &__button {
+    width: 70%;
+    padding: 18px 48px;
+    font-size: 20px;
+    font-weight: 600;
+    color: $color-text-primary;
+    background: linear-gradient(135deg, $color-primary 0%, $color-primary-dark 100%);
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 4px 15px $color-shadow-primary;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px $color-shadow-primary-hover;
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+
+  &__settings {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    transform: translateY(100%);
+    transition: transform 0.25s ease-out;
+    z-index: 5;
+
+    &--visible {
+      transform: translateY(0);
+    }
+  }
+}

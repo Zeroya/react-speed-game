@@ -1,0 +1,35 @@
+@use '../../styles/colors' as *;
+
+.score-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 24px;
+  background-color: $color-bg-block;
+  border-radius: 10px;
+  min-width: 120px;
+  box-shadow: 0 4px 12px $color-shadow;
+
+  &__label {
+    font-size: 14px;
+    color: $color-text-secondary;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+
+  &__value {
+    font-size: 32px;
+    font-weight: 700;
+    color: $color-text-primary;
+  }
+
+  &--player &__value {
+    color: $color-score-player;
+  }
+
+  &--computer &__value {
+    color: $color-score-computer;
+  }
+}
