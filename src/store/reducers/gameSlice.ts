@@ -1,9 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { DEFAULT_TIME_LIMIT } from '../../constants';
-import { CellStatus, GamePhase, ZoomLevel } from '../../types';
-import type { CellColors, CellData, GameState, RoundWinner } from '../../types';
-import { ShapeType } from '../../types/enums/shapeType';
+import { CellStatus, GamePhase, ZoomLevel, ShapeType } from '../../types';
+import type { CellColors, CellData, GameState } from '../../types';
 
 const DEFAULT_CELL_COLORS: CellColors = {
   default: '#4a90d9',
