@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { DEFAULT_TIME_LIMIT, DEFAULT_CELL_COLORS } from '@/constants';
 import { CellStatus, GamePhase, ZoomLevel, ShapeType } from '@/types';
-import type { CellData, GameState } from '@/types';
+import type { CellColors, CellData, GameState } from '@/types';
 
 const createInitialCells = (gridSize: number): CellData[] => {
   const totalCells = gridSize * gridSize;
