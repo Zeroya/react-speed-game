@@ -112,3 +112,59 @@
     transform: scale(1);
   }
 }
+
+// Tablet & Mobile
+@media (max-width: 1024px) {
+  .modal {
+    padding: 24px 32px;
+    min-width: 240px;
+    max-width: 90vw;
+    border-radius: 12px;
+
+    &__title {
+      font-size: 1.5rem;
+      margin-bottom: 12px;
+    }
+
+    &__subtitle {
+      font-size: 1rem;
+    }
+
+    &__score {
+      font-size: 1.2rem;
+      margin-top: 12px;
+    }
+
+    &__button {
+      margin-top: 20px;
+      padding: 10px 24px;
+      font-size: 0.9rem;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .modal {
+    padding: 20px 24px;
+    min-width: 200px;
+
+    &__title {
+      font-size: 1.3rem;
+      margin-bottom: 10px;
+    }
+
+    &__subtitle {
+      font-size: 0.9rem;
+    }
+
+    &__score {
+      font-size: 1.1rem;
+    }
+
+    &__button {
+      margin-top: 16px;
+      padding: 8px 20px;
+      font-size: 0.85rem;
+    }
+  }
+}

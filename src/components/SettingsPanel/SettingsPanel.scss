@@ -240,5 +240,103 @@
       transform: translateY(0);
     }
   }
+
+  // Tablet & Mobile
+  @media (max-width: 1024px) {
+    padding: 20px 16px 24px;
+    gap: 12px;
+
+    &__title {
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+
+    &__group {
+      gap: 6px;
+    }
+
+    &__label {
+      font-size: 11px;
+    }
+
+    &__option {
+      padding: 5px 8px;
+      font-size: 11px;
+    }
+
+    &__input {
+      padding: 6px 8px;
+      font-size: 13px;
+    }
+
+    &__select {
+      padding: 6px 28px 6px 8px;
+      font-size: 13px;
+    }
+
+    &__radio-group {
+      gap: 12px;
+    }
+
+    &__radio {
+      span {
+        font-size: 12px;
+      }
+
+      input[type='radio'] {
+        width: 14px;
+        height: 14px;
+      }
+    }
+
+    &__colors {
+      gap: 8px;
+    }
+
+    &__color {
+      input[type='color'] {
+        width: 28px;
+        height: 28px;
+      }
+
+      span {
+        font-size: 11px;
+      }
+    }
+
+    &__start-button {
+      margin-top: 4px;
+      padding: 8px 12px;
+      font-size: 13px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    padding: 16px 12px 20px;
+    gap: 10px;
+
+    &__title {
+      font-size: 13px;
+    }
+
+    &__colors {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+    }
+
+    &__color {
+      flex-direction: column;
+      gap: 4px;
+
+      input[type='color'] {
+        width: 24px;
+        height: 24px;
+      }
+
+      span {
+        font-size: 9px;
+      }
+    }
+  }
 }
 

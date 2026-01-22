@@ -32,4 +32,36 @@
   &--computer &__value {
     color: $color-score-computer;
   }
+
+  // Tablet & Mobile
+  @media (max-width: 1024px) {
+    padding: 10px 14px;
+    min-width: 80px;
+    border-radius: 8px;
+
+    &__label {
+      font-size: 10px;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+
+    &__value {
+      font-size: 20px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    padding: 8px 10px;
+    min-width: 60px;
+    border-radius: 6px;
+
+    &__label {
+      font-size: 8px;
+      margin-bottom: 2px;
+    }
+
+    &__value {
+      font-size: 16px;
+    }
+  }
 }
