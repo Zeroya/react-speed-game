@@ -1,15 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import { DEFAULT_TIME_LIMIT } from '../../constants';
-import { CellStatus, GamePhase, ZoomLevel, ShapeType } from '../../types';
-import type { CellColors, CellData, GameState } from '../../types';
-
-const DEFAULT_CELL_COLORS: CellColors = {
-  default: '#4a90d9',
-  highlighted: '#ffd700',
-  correct: '#4caf50',
-  wrong: '#f44336',
-};
+import { DEFAULT_TIME_LIMIT, DEFAULT_CELL_COLORS } from '@/constants';
+import { CellStatus, GamePhase, ZoomLevel, ShapeType } from '@/types';
+import type { CellData, GameState } from '@/types';
 
 const createInitialCells = (gridSize: number): CellData[] => {
   const totalCells = gridSize * gridSize;
@@ -53,9 +46,6 @@ const gameSlice = createSlice({
     },
     setGridSize: (state, action: PayloadAction<number>) => {
       state.gridSize = action.payload;
-
-      // При смене размера сетки пересоздаём клетки,
-      // чтобы правая панель сразу показывала корректную фигуру.
       state.cells = createInitialCells(state.gridSize);
     },
     setShapeType: (state, action: PayloadAction<ShapeType>) => {
@@ -92,8 +82,24 @@ const gameSlice = createSlice({
       state.currentRound += 1;
       state.gamePhase = GamePhase.RoundStart;
       state.lastRoundWinner = null;
+      state.currentHighlightedCell = null;
+      state.cells = state.cells.map((cell) => {
+        if (cell.status === CellStatus.Highlighted) {
+          return {
+            ...cell,
+            status: CellStatus.Default,
+          };
+        }
+        return cell;
+      });
     },
     highlightCell: (state, action: PayloadAction<number>) => {
+      if (state.currentHighlightedCell !== null) {
+        const prevCell = state.cells[state.currentHighlightedCell];
+        if (prevCell.status === CellStatus.Highlighted) {
+          prevCell.status = CellStatus.Default;
+        }
+      }
       state.currentHighlightedCell = action.payload;
       state.highlightStartTime = Date.now();
       state.cells[action.payload].status = CellStatus.Highlighted;

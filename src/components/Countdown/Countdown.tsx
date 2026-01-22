@@ -6,14 +6,11 @@ interface CountdownProps {
   onComplete: () => void;
 }
 
-const Countdown = ({ isActive, onComplete }: CountdownProps) => {
+export const Countdown = ({ isActive, onComplete }: CountdownProps) => {
   const [count, setCount] = useState(3);
 
   useEffect(() => {
-    if (!isActive) {
-      setCount(3);
-      return;
-    }
+    if (!isActive) return;
 
     if (count === 0) {
       onComplete();
@@ -37,6 +34,3 @@ const Countdown = ({ isActive, onComplete }: CountdownProps) => {
     </div>
   );
 };
-
-export { Countdown };
-export default Countdown;

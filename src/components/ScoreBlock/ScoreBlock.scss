@@ -1,4 +1,5 @@
-@use '../../styles/colors' as *;
+@use '@/styles/colors' as *;
+
 
 .score-block {
   display: flex;
@@ -33,7 +34,6 @@
     color: $color-score-computer;
   }
 
-  // Tablet & Mobile
   @media (max-width: 1024px) {
     padding: 10px 14px;
     min-width: 80px;

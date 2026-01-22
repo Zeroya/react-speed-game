@@ -1,4 +1,4 @@
-import { CellStatus } from '../types';
+import { CellStatus } from '@/types';
 
 export const getCellStatusClass = (status: CellStatus): string => {
   switch (status) {

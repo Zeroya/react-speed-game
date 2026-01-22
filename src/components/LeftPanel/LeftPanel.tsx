@@ -1,18 +1,16 @@
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { openConfig } from '../../store/reducers';
-import { SettingsPanel } from '../SettingsPanel';
+import { useAppDispatch, useAppSelector } from '@/hooks';
+import { openConfig } from '@/store/reducers';
+import { SettingsPanel } from '../index';
 import './LeftPanel.scss';
-
-const LeftPanel = () => {
+export const LeftPanel = () => {
   const dispatch = useAppDispatch();
   const isConfigOpen = useAppSelector((state) => state.game.isConfigOpen);
-
   const handleOpenSettings = () => {
     if (!isConfigOpen) {
       dispatch(openConfig());
     }
   };
-
+  
   return (
     <div className="left-panel">
       <h1 className="left-panel__title">Speed Game</h1>
@@ -21,7 +19,6 @@ const LeftPanel = () => {
           Start
         </button>
       </div>
-
       <div
         className={`left-panel__settings ${
           isConfigOpen ? 'left-panel__settings--visible' : ''
@@ -32,6 +29,3 @@ const LeftPanel = () => {
     </div>
   );
 };
-
-export { LeftPanel };
-export default LeftPanel;

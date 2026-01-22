@@ -1,7 +1,5 @@
 import { useAppSelector } from './hooks'
-import { LeftPanel } from './components/LeftPanel'
-import { RightPanel } from './components/RightPanel'
-import { GameController } from './components/GameController'
+import { LeftPanel, RightPanel, GameController } from './components'
 import './App.scss'
 
 function App() {

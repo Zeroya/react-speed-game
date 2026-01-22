@@ -1,15 +1,13 @@
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { ScoreBlockVariant } from '../../types';
-import { forfeitGame } from '../../store/reducers';
-import { GameGrid } from '../GameGrid';
-import { ScoreBlock } from '../ScoreBlock';
+import { useAppDispatch, useAppSelector } from '@/hooks';
+import { ScoreBlockVariant } from '@/types';
+import { forfeitGame } from '@/store/reducers';
+import { GameGrid, ScoreBlock } from '../index';
 import './RightPanel.scss';
-
-const RightPanel = () => {
+export const RightPanel = () => {
   const dispatch = useAppDispatch();
   const { playerScore, computerScore, timeLimit, isPlaying, isConfigOpen, currentRound, totalRounds, playerName } =
     useAppSelector((state) => state.game);
-
+    
   return (
     <div className="right-panel">
       {isPlaying && (
@@ -41,6 +39,3 @@ const RightPanel = () => {
     </div>
   );
 };
-
-export { RightPanel };
-export default RightPanel;

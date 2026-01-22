@@ -1,4 +1,5 @@
-@use '../../styles/colors' as *;
+@use '@/styles/colors' as *;
+
 
 .settings-panel {
   position: absolute;
@@ -73,14 +74,12 @@
       box-shadow: 0 0 0 1px rgba(102, 126, 234, 0.5);
     }
 
-    // Убираем стрелки у number input
     &::-webkit-outer-spin-button,
     &::-webkit-inner-spin-button {
       -webkit-appearance: none;
       margin: 0;
     }
 
-    // Firefox
     &[type='number'] {
       -moz-appearance: textfield;
     }
@@ -241,7 +240,6 @@
     }
   }
 
-  // Tablet & Mobile
   @media (max-width: 1024px) {
     padding: 20px 16px 24px;
     gap: 12px;

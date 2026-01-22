@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { ModalVariant } from '@/types';
 import './Modal.scss';
 
 interface ModalProps {
@@ -6,10 +7,10 @@ interface ModalProps {
   onClose?: () => void;
   autoCloseDelay?: number;
   children: React.ReactNode;
-  variant?: 'default' | 'success' | 'error' | 'round';
+  variant?: ModalVariant;
 }
 
-const Modal = ({ isOpen, onClose, autoCloseDelay, children, variant = 'default' }: ModalProps) => {
+export const Modal = ({ isOpen, onClose, autoCloseDelay, children, variant = ModalVariant.Default }: ModalProps) => {
   useEffect(() => {
     if (isOpen && autoCloseDelay && onClose) {
       const timer = setTimeout(onClose, autoCloseDelay);
@@ -28,5 +29,3 @@ const Modal = ({ isOpen, onClose, autoCloseDelay, children, variant = 'default' 
   );
 };
 
-export { Modal };
-export default Modal;

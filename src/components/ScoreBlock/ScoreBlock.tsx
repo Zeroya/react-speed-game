@@ -1,4 +1,4 @@
-import { ScoreBlockVariant } from '../../types';
+import { ScoreBlockVariant } from '@/types';
 import './ScoreBlock.scss';
 
 interface ScoreBlockProps {
@@ -7,7 +7,7 @@ interface ScoreBlockProps {
   variant?: ScoreBlockVariant;
 }
 
-const ScoreBlock = ({ label, value, variant = ScoreBlockVariant.Default }: ScoreBlockProps) => {
+export const ScoreBlock = ({ label, value, variant = ScoreBlockVariant.Default }: ScoreBlockProps) => {
   return (
     <div className={`score-block score-block--${variant}`}>
       <span className="score-block__label">{label}</span>
@@ -16,5 +16,3 @@ const ScoreBlock = ({ label, value, variant = ScoreBlockVariant.Default }: Score
   );
 };
 
-export { ScoreBlock };
-export default ScoreBlock;

@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { GamePhase, CellStatus } from '../../types';
-import { generateShapeMask } from '../../utils/shapeGenerator';
+import { useAppDispatch, useAppSelector } from '@/hooks';
+import { GamePhase, CellStatus, ModalVariant } from '@/types';
+import { generateShapeMask } from '@/utils/shapeGenerator';
 import {
   setGamePhase,
   highlightCell,
@@ -10,16 +10,12 @@ import {
   endGame,
   resetGame,
   forfeitGame,
-} from '../../store/reducers';
-import { Modal } from '../Modal';
-import { Countdown } from '../Countdown';
-import { ScreenFlash } from '../ScreenFlash';
+} from '@/store/reducers';
+import { Modal, Countdown, ScreenFlash } from '../index';
+import { ROUND_MODAL_DELAY, RESULT_MODAL_DELAY } from '@/constants/game';
 import './GameController.scss';
 
-const ROUND_MODAL_DELAY = 1500;
-const RESULT_MODAL_DELAY = 1500;
-
-const GameController = () => {
+export const GameController = () => {
   const dispatch = useAppDispatch();
   const {
     isPlaying,
@@ -67,12 +63,7 @@ const GameController = () => {
   const handleFlashComplete = useCallback(() => {
     setShowFlash(false);
     dispatch(setGamePhase(GamePhase.Playing));
-
-    const cellId = getRandomAvailableCell();
-    if (cellId !== null) {
-      dispatch(highlightCell(cellId));
-    }
-  }, [dispatch, getRandomAvailableCell]);
+  }, [dispatch]);
 
   const handleResultModalClose = useCallback(() => {
     if (currentRound >= totalRounds) {
@@ -86,7 +77,15 @@ const GameController = () => {
     dispatch(resetGame());
   }, [dispatch]);
 
-  // Timer for highlighted cell
+  useEffect(() => {
+    if (gamePhase === GamePhase.Playing && currentHighlightedCell === null) {
+      const cellId = getRandomAvailableCell();
+      if (cellId !== null) {
+        dispatch(highlightCell(cellId));
+      }
+    }
+  }, [gamePhase, currentHighlightedCell, getRandomAvailableCell, dispatch]);
+
   useEffect(() => {
     if (gamePhase !== GamePhase.Playing || currentHighlightedCell === null) return;
 
@@ -97,7 +96,6 @@ const GameController = () => {
     return () => clearTimeout(timer);
   }, [gamePhase, currentHighlightedCell, timeLimit, dispatch]);
 
-  // Keyboard shortcut for forfeit (Q key)
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key.toLowerCase() === 'q' && isPlaying) {
@@ -109,7 +107,6 @@ const GameController = () => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isPlaying, dispatch]);
 
-  // Auto-win detection
   useEffect(() => {
     if (gamePhase !== GamePhase.RoundResult) return;
 
@@ -126,7 +123,6 @@ const GameController = () => {
 
   return (
     <div className="game-controller">
-      {/* Round Start Modal */}
       <Modal
         isOpen={gamePhase === GamePhase.RoundStart}
         autoCloseDelay={ROUND_MODAL_DELAY}
@@ -137,21 +133,19 @@ const GameController = () => {
         <p className="modal__subtitle">Get ready!</p>
       </Modal>
 
-      {/* Countdown */}
       <Countdown
+        key={currentRound}
         isActive={gamePhase === GamePhase.Countdown}
         onComplete={handleCountdownComplete}
       />
 
-      {/* Screen Flash */}
       <ScreenFlash trigger={showFlash} onComplete={handleFlashComplete} />
 
-      {/* Round Result Modal */}
       <Modal
         isOpen={gamePhase === GamePhase.RoundResult}
         autoCloseDelay={RESULT_MODAL_DELAY}
         onClose={handleResultModalClose}
-        variant={lastRoundWinner === 'player' ? 'success' : 'error'}
+        variant={lastRoundWinner === 'player' ? ModalVariant.Success : ModalVariant.Error}
       >
         <h2 className="modal__title">
           {lastRoundWinner === 'player' ? `${playerName} Wins!` : 'Computer Wins!'}
@@ -163,11 +157,10 @@ const GameController = () => {
         </p>
       </Modal>
 
-      {/* Game End Modal */}
       <Modal
         isOpen={gamePhase === GamePhase.GameEnd && !didForfeit}
         onClose={handleGameEndModalClose}
-        variant={gameWinner === 'player' ? 'success' : gameWinner === 'computer' ? 'error' : 'default'}
+        variant={gameWinner === 'player' ? ModalVariant.Success : gameWinner === 'computer' ? ModalVariant.Error : ModalVariant.Default}
       >
         <h2 className="modal__title">Game Over!</h2>
         <p className="modal__subtitle">
@@ -185,11 +178,10 @@ const GameController = () => {
         </button>
       </Modal>
 
-      {/* Forfeit Modal */}
       <Modal
         isOpen={gamePhase === GamePhase.GameEnd && didForfeit}
         onClose={handleGameEndModalClose}
-        variant="error"
+        variant={ModalVariant.Error}
       >
         <h2 className="modal__title">You Gave Up!</h2>
         <p className="modal__subtitle">Computer Won!</p>
@@ -201,5 +193,3 @@ const GameController = () => {
   );
 };
 
-export { GameController };
-export default GameController;

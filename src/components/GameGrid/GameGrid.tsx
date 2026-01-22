@@ -1,20 +1,16 @@
 import { useMemo } from 'react';
-import { useAppSelector } from '../../hooks';
-import { generateShapeMask } from '../../utils/shapeGenerator';
+import { useAppSelector } from '@/hooks';
+import { generateShapeMask } from '@/utils/shapeGenerator';
 import { Cell } from '../Cell';
 import './GameGrid.scss';
-
-const GameGrid = () => {
+export const GameGrid = () => {
   const { cells, gridSize, shapeType, isPlaying, zoomLevel } = useAppSelector((state) => state.game);
-
   const shapeMask = useMemo(() => generateShapeMask(gridSize, shapeType), [gridSize, shapeType]);
-
   const classNames = [
     'game-grid',
     !isPlaying && 'game-grid--no-effects',
     `game-grid--zoom-${zoomLevel}`,
   ].filter(Boolean).join(' ');
-
   return (
     <div
       className={classNames}
@@ -22,7 +18,6 @@ const GameGrid = () => {
     >
       {cells.map((cell) => {
         const isActive = shapeMask[cell.id];
-
         return (
           <div
             key={cell.id}
@@ -35,6 +30,3 @@ const GameGrid = () => {
     </div>
   );
 };
-
-export { GameGrid };
-export default GameGrid;

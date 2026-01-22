@@ -1,14 +1,14 @@
 import { useMemo } from 'react';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { cellClicked } from '../../store/reducers';
-import { CellStatus, GamePhase } from '../../types';
+import { useAppDispatch, useAppSelector } from '@/hooks';
+import { cellClicked } from '@/store/reducers';
+import { CellStatus, GamePhase } from '@/types';
 import './Cell.scss';
 
 interface CellProps {
   id: number;
 }
 
-const Cell = ({ id }: CellProps) => {
+export const Cell = ({ id }: CellProps) => {
   const dispatch = useAppDispatch();
   const cell = useAppSelector((state) => state.game.cells[id]);
   const gamePhase = useAppSelector((state) => state.game.gamePhase);
@@ -51,5 +51,3 @@ const Cell = ({ id }: CellProps) => {
   );
 };
 
-export { Cell };
-export default Cell;

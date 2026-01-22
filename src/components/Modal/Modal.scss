@@ -1,4 +1,5 @@
-@use '../../styles/colors' as *;
+@use '@/styles/colors' as *;
+
 
 .modal-overlay {
   position: fixed;
@@ -113,7 +114,6 @@
   }
 }
 
-// Tablet & Mobile
 @media (max-width: 1024px) {
   .modal {
     padding: 24px 32px;

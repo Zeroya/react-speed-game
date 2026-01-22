@@ -1,43 +1,11 @@
 import { useState, useEffect } from 'react';
-import { useForm } from 'react-hook-form';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { DEFAULT_TIME_LIMIT } from '../../constants';
-import { ShapeType, ZoomLevel } from '../../types';
-import type { CellColors } from '../../types';
-import { closeConfig, setGridSize, setShapeType, setTimeLimit, setTotalRounds, setZoomLevel, setCellColor, startGame, setPlayerName } from '../../store/reducers';
-import { getShapeCellCount } from '../../utils/shapeGenerator';
+import { useForm, useWatch } from 'react-hook-form';
+import { useAppDispatch, useAppSelector } from '@/hooks';
+import { PRESET_LEVELS, GRID_SIZES, SHAPE_OPTIONS, ZOOM_OPTIONS, COLOR_OPTIONS } from '@/constants/settings';
+import { ShapeType, ZoomLevel, type CellColors } from '@/types';
+import { closeConfig, setGridSize, setShapeType, setTimeLimit, setTotalRounds, setZoomLevel, setCellColor, startGame, setPlayerName } from '@/store/reducers';
+import { getShapeCellCount } from '@/utils/shapeGenerator';
 import './SettingsPanel.scss';
-
-const PRESET_LEVELS = [
-  { id: 'easy', label: 'Easy', timeLimit: 1500 },
-  { id: 'medium', label: 'Medium', timeLimit: 1000 },
-  { id: 'hard', label: 'Hard', timeLimit: 600 },
-  { id: 'custom', label: 'Custom', timeLimit: DEFAULT_TIME_LIMIT },
-];
-
-const GRID_SIZES = [6, 7, 8, 9, 10];
-
-const SHAPE_OPTIONS = [
-  { value: ShapeType.Square, label: 'Square' },
-  { value: ShapeType.Triangle, label: 'Triangle' },
-  { value: ShapeType.Diamond, label: 'Diamond' },
-  { value: ShapeType.Cross, label: 'Cross' },
-  { value: ShapeType.Plus, label: 'Plus' },
-  { value: ShapeType.Hexagon, label: 'Hexagon' },
-];
-
-const ZOOM_OPTIONS = [
-  { value: ZoomLevel.Far, label: 'Far' },
-  { value: ZoomLevel.Medium, label: 'Medium' },
-  { value: ZoomLevel.Close, label: 'Close' },
-];
-
-const COLOR_OPTIONS: { key: keyof CellColors; label: string }[] = [
-  { key: 'default', label: 'Default' },
-  { key: 'highlighted', label: 'Highlighted' },
-  { key: 'correct', label: 'Correct' },
-  { key: 'wrong', label: 'Wrong' },
-];
 
 interface FormData {
   customTime: number;
@@ -45,7 +13,7 @@ interface FormData {
   playerName: string;
 }
 
-const SettingsPanel = () => {
+export const SettingsPanel = () => {
   const dispatch = useAppDispatch();
   const { gridSize, shapeType, timeLimit, totalRounds, zoomLevel, cellColors, playerName } = useAppSelector((state) => state.game);
 
@@ -60,7 +28,7 @@ const SettingsPanel = () => {
     register,
     handleSubmit,
     setValue,
-    watch,
+    control,
     formState: { errors },
   } = useForm<FormData>({
     defaultValues: {
@@ -71,8 +39,8 @@ const SettingsPanel = () => {
     mode: 'onChange',
   });
 
-  const customTimeValue = watch('customTime');
-  const roundsValue = watch('rounds');
+  const customTimeValue = useWatch({ control, name: 'customTime' });
+  const roundsValue = useWatch({ control, name: 'rounds' });
 
   useEffect(() => {
     if (selectedLevel === 'custom' && customTimeValue) {
@@ -83,7 +51,6 @@ const SettingsPanel = () => {
     }
   }, [customTimeValue, selectedLevel, dispatch]);
 
-  // Корректировать раунды при изменении фигуры или размера сетки
   useEffect(() => {
     if (roundsValue > maxRounds) {
       setValue('rounds', maxRounds);
@@ -277,5 +244,3 @@ const SettingsPanel = () => {
   );
 };
 
-export { SettingsPanel };
-export default SettingsPanel;
